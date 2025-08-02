@@ -227,7 +227,6 @@ const DashboardPage = () => {
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Offers</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow text-sm">
-            <thead>
               <thead>
                 <tr>
                   <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Food</th>
@@ -238,7 +237,6 @@ const DashboardPage = () => {
                   <th className="py-2 px-2 sm:px-4 border-b text-gray-900"></th>
                 </tr>
               </thead>
-            </thead>
             <tbody>
               {offers.map((offer: Offer, idx) => (
                 <tr key={idx}>
