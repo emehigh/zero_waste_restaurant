@@ -111,7 +111,7 @@ const DashboardPage = () => {
     {/* Sidebar */}
   <aside className="md:w-64 bg-white shadow-md p-4 flex-shrink-0">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">EcoDashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-900">EcoDashboard</h1>
           {/* Mobile: Dropdown toggle */}
           <button
             className="md:hidden text-green-700 border border-green-700 rounded px-3 py-1"
@@ -129,9 +129,9 @@ const DashboardPage = () => {
           <a href="#" className="text-green-700 font-semibold">
             Overview
           </a>
-          <a href="#">My Offers</a>
-          <a href="#">Analytics</a>
-          <a href="#">Settings</a>
+          <a href="#" className="text-gray-900">My Offers</a>
+          <a href="#" className="text-gray-900">Analytics</a>
+          <a href="#" className="text-gray-900">Settings</a>
           <button
             className="mt-4 w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
             onClick={() => signOut({ callbackUrl: "/company-login" })}
@@ -145,11 +145,12 @@ const DashboardPage = () => {
     {/* Main content */}
     <main className="flex-1 p-2 sm:p-4 md:p-6">
       <header className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-    <h2 className="text-xl font-bold text-center sm:text-left w-full sm:w-auto">
-            {session?.user?.email
-              ? `Welcome, ${session.user.email}!`
-              : "Welcome!"}
-          </h2>        <button
+        <h2 className="text-xl font-bold text-center text-gray-900 sm:text-left w-full sm:w-auto">
+          {session?.user?.email
+            ? `Welcome, ${session.user.email}!`
+            : "Welcome!"}
+        </h2>
+        <button
           className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           onClick={() => setShowModal(true)}
         >
@@ -160,12 +161,12 @@ const DashboardPage = () => {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white p-4 sm:p-6 rounded shadow-lg w-full max-w-md mx-2">
-            <h2 className="text-xl font-bold mb-4">Add Food Offer</h2>
+            <h2 className="text-xl font-bold mb-4 text-gray-900">Add Food Offer</h2>
             <form className="flex flex-col gap-4" onSubmit={handleAddOffer}>
               <input
                 type="text"
                 placeholder="Food Name"
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 text-gray-900"
                 required
                 value={foodName}
                 onChange={e => setFoodName(e.target.value)}
@@ -173,14 +174,14 @@ const DashboardPage = () => {
               <input
                 type="number"
                 placeholder="Quantity"
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 text-gray-900"
                 required
                 value={quantity}
                 onChange={e => setQuantity(e.target.value)}
                 min={1}
               />
               <select
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 text-gray-900"
                 value={unit}
                 onChange={e => setUnit(e.target.value)}
               >
@@ -192,7 +193,7 @@ const DashboardPage = () => {
               <input
                 type="number"
                 placeholder="Price"
-                className="border rounded px-3 py-2"
+                className="border rounded px-3 py-2 text-gray-900"
                 required
                 value={price}
                 onChange={e => setPrice(e.target.value)}
@@ -223,27 +224,29 @@ const DashboardPage = () => {
 
       {/* Offers Table */}
       <section>
-        <h3 className="text-lg font-semibold mb-4">Recent Offers</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Offers</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow text-sm">
             <thead>
-              <tr>
-                <th className="py-2 px-2 sm:px-4 border-b">Food</th>
-                <th className="py-2 px-2 sm:px-4 border-b">Quantity</th>
-                <th className="py-2 px-2 sm:px-4 border-b">Unit</th>
-                <th className="py-2 px-2 sm:px-4 border-b">Price</th>
-                <th className="py-2 px-2 sm:px-4 border-b">Posted</th>
-                <th className="py-2 px-2 sm:px-4 border-b"></th>
-              </tr>
+              <thead>
+                <tr>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Food</th>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Quantity</th>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Unit</th>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Price</th>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900">Posted</th>
+                  <th className="py-2 px-2 sm:px-4 border-b text-gray-900"></th>
+                </tr>
+              </thead>
             </thead>
             <tbody>
               {offers.map((offer: Offer, idx) => (
                 <tr key={idx}>
-                  <td className="py-2 px-2 sm:px-4 text-center border-b">{offer.food}</td>
-                  <td className="py-2 px-2 sm:px-4 text-center border-b">{offer.quantity}</td>
-                  <td className="py-2 px-2 sm:px-4 text-center border-b">{offer.unit}</td>
-                  <td className="py-2 px-2 sm:px-4 text-center border-b">{offer.price}</td>
-                  <td className="py-2 px-2 sm:px-4 text-center border-b">
+                  <td className="py-2 px-2 sm:px-4 text-center text-gray-900 border-b">{offer.food}</td>
+                  <td className="py-2 px-2 sm:px-4 text-center text-gray-900 border-b">{offer.quantity}</td>
+                  <td className="py-2 px-2 sm:px-4 text-center text-gray-900 border-b">{offer.unit}</td>
+                  <td className="py-2 px-2 sm:px-4 text-center text-gray-900 border-b">{offer.price}</td>
+                  <td className="py-2 px-2 sm:px-4 text-center text-gray-900 border-b">
                     {offer.postedAt
                       ? new Date(offer.postedAt).toLocaleString("en-GB", {
                           year: "numeric",

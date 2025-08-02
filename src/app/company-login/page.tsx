@@ -40,7 +40,7 @@ const CompanyLoginPage = () => {
           <input
             type="email"
             placeholder="Company Email"
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-gray-900"
             required
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -48,7 +48,7 @@ const CompanyLoginPage = () => {
           <input
             type="password"
             placeholder="Password"
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-gray-900"
             required
             value={password}
             onChange={e => setPassword(e.target.value)}
