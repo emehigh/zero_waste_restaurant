@@ -176,7 +176,7 @@ const [deleteIdx, setDeleteIdx] = useState<number | null>(null);
               </tr>
             </thead>
             <tbody>
-              {offers.map((offer: any, idx) => (
+              {offers.map((offer: Offer, idx) => (
                 <tr key={idx}>
                   <td className="py-2 px-4 text-center border-b">{offer.food}</td>
                   <td className="py-2 px-4 text-center border-b">{offer.quantity}</td>
