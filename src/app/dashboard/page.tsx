@@ -37,6 +37,11 @@ const DashboardPage = () => {
     }
   }, [status, router]);
 
+  useEffect(() => {
+    fetchOffers();
+  }, []);
+
+
     if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -50,7 +55,7 @@ const DashboardPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <span className="text-lg">You must be logged in to view this page.</span>
       </div>
-    );2111
+    );
   }
 
   // Fetch offers from backend
@@ -66,9 +71,6 @@ const DashboardPage = () => {
     }
   }
 
-  useEffect(() => {
-    fetchOffers();
-  }, []);
 
   async function handleAddOffer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
