@@ -1,0 +1,30 @@
+// Prisma schema for Zero Waste project
+// Defines a basic User model for authentication
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  offers    FoodOffer[]
+}
+
+model FoodOffer {
+  id        String   @id @default(cuid())
+  food      String
+  quantity  Int
+  unit      String
+  price     Float
+  postedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
