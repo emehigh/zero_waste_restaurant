@@ -66,7 +66,7 @@ const DashboardPage = () => {
       const data = await res.json();
       console.log("Fetched offers:", data);
       setOffers(data.offers || []);
-    } catch (err) {
+    } catch {
       setApiError("Could not load offers.");
     }
   }
@@ -100,7 +100,7 @@ const DashboardPage = () => {
       setUnit("pcs");
       setPrice("");
       setShowModal(false);
-    } catch (err) {
+    } catch {
       setApiError("Network error. Please try again.");
     }
     setLoading(false);

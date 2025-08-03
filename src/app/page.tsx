@@ -21,7 +21,7 @@ export default function Home() {
           <Link href="/company-login" className="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-green-700 transition text-center">
             Company Login / Enroll
           </Link>
-          <Link href="#browse" className="bg-white border border-green-600 text-green-700 font-semibold py-3 px-6 rounded-lg shadow hover:bg-green-50 transition text-center">
+          <Link href="/customer-login" className="bg-white border border-green-600 text-green-700 font-semibold py-3 px-6 rounded-lg shadow hover:bg-green-50 transition text-center">
             Browse Surplus Food
           </Link>
         </div>

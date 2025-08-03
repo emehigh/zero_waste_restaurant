@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import  ClientSessionProvider  from "./sessionProvider";
+import ClientSessionProvider from "./sessionProvider";
+import Sidebar from "./components/Sidebar";
 import "./globals.css";
+import CartButtonWrapper from "./components/CartButtonWrapper"; // Move CartButtonWrapper to its own file
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ClientSessionProvider>{children}</ClientSessionProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClientSessionProvider>
+          <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-green-50 via-green-100 to-green-200">
+            <Sidebar />
+            <main className="flex-1 flex flex-col relative">
+              {children}
+              <CartButtonWrapper />
+            </main>
+          </div>
+        </ClientSessionProvider>
       </body>
     </html>
   );
