@@ -36,9 +36,9 @@ export default function RootLayout({
             </LayoutAuthWrapper>
             <main className="flex-1 flex flex-col relative">
               {children}
-              <LayoutAuthWrapper>
-                <CartButtonWrapper />
-              </LayoutAuthWrapper>
+              {/* <LayoutAuthWrapper> */}
+                {/* <CartButtonWrapper /> */}
+              {/* </LayoutAuthWrapper> */}
             </main>
           </div>
         </ClientSessionProvider>

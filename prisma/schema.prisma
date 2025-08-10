@@ -1,5 +1,5 @@
 // Prisma schema for Zero Waste project
-// Defines a basic User model for authentication
+// Defines models for authentication, food items, offers, and reviews
 
 datasource db {
   provider = "postgresql"
@@ -14,15 +14,48 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  role      UserRole    @default(CUSTOMER)
-  lat     Float?
-  lng     Float?
-  logoUrl String?
-  cropY   Int?    
-  cropX   Int?    
-  name String?
+  role      UserRole @default(CUSTOMER)
+  lat       Float?
+  lng       Float?
+  logoUrl   String?
+  cropY     Int?    
+  cropX     Int?    
+  name      String?
   createdAt DateTime @default(now())
+  
+  // Relations
   offers    FoodOffer[]
+  foodItems FoodItem[]
+  
+  // Review relations
+  restaurantReviews Review[] @relation("RestaurantReviews")
+  customerReviews   Review[] @relation("CustomerReviews")
+}
+
+model FoodItem {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  category    String
+  ingredients String[] // Array of strings
+  allergens   String[] // Array of strings
+  calories    Float    @default(0)
+  protein     Float    @default(0)
+  carbs       Float    @default(0)
+  fat         Float    @default(0)
+  fiber       Float    @default(0)
+  sugar       Float    @default(0)
+  sodium      Float    @default(0)
+  restaurantId String
+  restaurant  User     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relation to offers
+  offers      FoodOffer[]
+
+  @@map("food_items")
 }
 
 model FoodOffer {
@@ -32,8 +65,28 @@ model FoodOffer {
   unit      String
   price     Float
   postedAt  DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  
+  // Optional relation to food item
+  foodItemId String?
+  foodItem   FoodItem? @relation(fields: [foodItemId], references: [id], onDelete: SetNull)
+
+  @@map("food_offers")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  rating       Int      // 1-5 stars
+  comment      String
+  restaurantId String
+  restaurant   User     @relation("RestaurantReviews", fields: [restaurantId], references: [id], onDelete: Cascade)
+  customerId   String
+  customer     User     @relation("CustomerReviews", fields: [customerId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("reviews")
 }
 
 enum UserRole {

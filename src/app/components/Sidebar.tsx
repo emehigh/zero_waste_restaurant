@@ -46,6 +46,13 @@ export default function Sidebar() {
           <Link href="/admin" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
             Admin
           </Link>
+          
+        )}
+        {session?.user?.role === "RESTAURANT" && (
+          <Link href="/register-food" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
+            Register Food
+          </Link>
+          
         )}
         <Link href="/dashboard/settings" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
           Settings
