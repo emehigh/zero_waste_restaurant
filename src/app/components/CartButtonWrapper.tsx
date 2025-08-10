@@ -66,7 +66,6 @@ function CartButton() {
 
 export default function CartButtonWrapper() {
   const { data: session } = useSession();
-  // @ts-expect-error next-auth session.user may not have role typed, but we expect it to exist
   const isCustomer = session?.user?.role === "CUSTOMER";
   if (!session || !isCustomer) return null;
   return <CartButton />;

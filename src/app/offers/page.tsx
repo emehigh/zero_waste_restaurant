@@ -2,12 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Restaurant = {
-  id: string;
-  name: string;
-  logoUrl?: string;
-  offerCount: number;
-};
+
 
 type CartItem = {
   offerId: string;
@@ -19,6 +14,15 @@ type CartItem = {
 type Cart = {
   restaurantId: string | null;
   items: CartItem[];
+};
+
+type Restaurant = {
+  id: string;
+  name: string;
+  logoUrl?: string;
+  cropY?: number;
+  cropX?: number;
+  offerCount: number;
 };
 
 export default function OffersPage() {
@@ -73,10 +77,9 @@ export default function OffersPage() {
     setPendingRestaurant(null);
   }
 
-  return (
+return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-green-50 via-green-100 to-green-200 relative">
       {/* ...sidebar code... */}
-
 
       <main className="flex-1 flex flex-col items-center p-4 md:p-10 relative">
         {/* ...background and heading... */}
@@ -84,45 +87,66 @@ export default function OffersPage() {
         <h1 className="text-3xl font-bold text-green-700 mb-6">Browse Restaurants</h1>
         
         {/* Restaurant list */}
-
-        {loading ? (
-          <div className="text-gray-700 z-10">Loading...</div>
-        ) : (
-          <div className="flex flex-col gap-6 w-full max-w-2xl z-10">
-            {restaurants.map((r) => (
-              <div
-                key={r.id}
-                className="flex items-center bg-white/90 rounded-2xl shadow-lg hover:shadow-2xl transition p-4 gap-4 cursor-pointer border border-green-100 hover:border-green-400"
-                onClick={() => handleRestaurantClick(r.id)}
-                tabIndex={0}
-                onKeyDown={e => { if (e.key === "Enter") handleRestaurantClick(r.id); }}
-                role="button"
-                aria-label={`See offers for ${r.name}`}
-              >
-                <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center overflow-hidden border-2 border-green-300 shadow">
-                  {r.logoUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={r.logoUrl} alt={r.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-2xl font-bold text-green-700">{r.name[0]}</span>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <div className="font-bold text-lg text-gray-900">{r.name}</div>
-                  <div className="text-green-700 text-sm">
-                    {r.offerCount} offer{r.offerCount !== 1 ? "s" : ""}
-                  </div>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-green-600 font-semibold">See offers</span>
-                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-                    <path d="M9 18l6-6-6-6" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+       {loading ? (
+  <div className="text-gray-700 z-10">Loading...</div>
+) : (
+  <div className="flex flex-col gap-6 items-center w-full z-10">
+    {restaurants.map((r) => (
+  <div
+    key={r.id}
+    className="flex items-center rounded-2xl shadow-lg hover:shadow-2xl transition p-4 gap-4 cursor-pointer border border-green-100 hover:border-green-400 bg-transparent relative mx-auto"
+    onClick={() => handleRestaurantClick(r.id)}
+    tabIndex={0}
+    onKeyDown={e => { if (e.key === "Enter") handleRestaurantClick(r.id); }}
+    role="button"
+    aria-label={`See offers for ${r.name}`}
+    style={{
+      width: "100%",
+      maxWidth: "1000px",
+      height: "200px",
+      minWidth: "0",
+    }}
+  >
+    {/* Background image absolutely positioned */}
+    <div
+      className="absolute inset-0 w-full h-full rounded-2xl z-0"
+      style={
+        r.logoUrl
+          ? {
+              backgroundImage: `url(${r.logoUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: `-${r.cropX || 0}px -${r.cropY || 0}px`,
+              backgroundRepeat: "no-repeat",
+              filter: "brightness(0.85)",
+            }
+          : { background: "#bbf7d0" }
+      }
+    />
+    {/* Content on top of background */}
+    <div className="relative z-10 flex items-center w-full h-full">
+      <div className="flex-1 ml-4 min-w-0">
+        <div className="font-bold text-2xl text-gray-900 truncate">{r.name}</div>
+        <div className="text-green-700 text-md">
+          {r.offerCount} offer{r.offerCount !== 1 ? "s" : ""}
+        </div>
+      </div>
+      <div className="flex items-center gap-1">
+        <span className="text-green-600 font-semibold">See offers</span>
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+          <path d="M9 18l6-6-6-6" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    {/* Overlay for name if no logo */}
+    {!r.logoUrl && (
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <span className="text-6xl font-bold text-green-700">{r.name[0]}</span>
+      </div>
+    )}
+  </div>
+))}
+  </div>
+)}
 
         {/* Info Modal for switching restaurant */}
         {showCartInfo && (
@@ -151,15 +175,6 @@ export default function OffersPage() {
           </div>
         )}
       </main>
-      {/* Fixed Cart Button (visible on mobile only) */}
-      <button
-        className="fixed bottom-6 right-6 z-50 bg-green-600 text-white rounded-full shadow-lg px-6 py-3 font-bold text-lg flex items-center gap-2 md:hidden"
-        onClick={() => router.push("/cart")}
-        aria-label="View cart"
-      >
-        🛒 Cart
-      </button>
     </div>
   );
 }
-   

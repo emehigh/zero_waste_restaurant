@@ -1,9 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
+
+import { useSession } from "next-auth/react";
+
 
 export default function Sidebar() {
+  const { data: session } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  console.log("Session data:", session);
 
   return (
     <aside className="md:w-64 bg-white/90 shadow-lg p-6 border-r border-green-100 z-20 flex flex-col">
@@ -35,12 +42,18 @@ export default function Sidebar() {
         <Link href="/profile" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
           Profile
         </Link>
+        {session?.user?.role === "RESTAURANT" && (
+          <Link href="/admin" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
+            Admin
+          </Link>
+        )}
+        <Link href="/dashboard/settings" className="text-gray-700 hover:text-green-700 px-3 py-2 rounded transition">
+          Settings
+        </Link>
         {/* logout button */}
         <button
           className="text-red-600 hover:text-red-700 px-3 py-2 rounded transition"
-          onClick={() => {
-            // Handle logout logic here
-          }}
+          onClick={() => signOut({ callbackUrl: "/" })}
         >
           Logout
         </button>

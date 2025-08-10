@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ClientSessionProvider from "./sessionProvider";
-import Sidebar from "./components/Sidebar";
 import "./globals.css";
-import CartButtonWrapper from "./components/CartButtonWrapper"; // Move CartButtonWrapper to its own file
+import Sidebar from "./components/Sidebar";
+import CartButtonWrapper from "./components/CartButtonWrapper";
+import { LayoutAuthWrapper } from "./components/LayoutAuthWrapper"; // <-- import here
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,14 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientSessionProvider>
           <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-green-50 via-green-100 to-green-200">
-            <Sidebar />
+            <LayoutAuthWrapper>
+              <Sidebar />
+            </LayoutAuthWrapper>
             <main className="flex-1 flex flex-col relative">
               {children}
-              <CartButtonWrapper />
+              <LayoutAuthWrapper>
+                <CartButtonWrapper />
+              </LayoutAuthWrapper>
             </main>
           </div>
         </ClientSessionProvider>

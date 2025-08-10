@@ -109,37 +109,6 @@ const DashboardPage = () => {
   return (
   <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
     {/* Sidebar */}
-  <aside className="md:w-64 bg-white shadow-md p-4 flex-shrink-0">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">EcoDashboard</h1>
-          {/* Mobile: Dropdown toggle */}
-          <button
-            className="md:hidden text-green-700 border border-green-700 rounded px-3 py-1"
-            onClick={() => setSidebarOpen((open) => !open)}
-            aria-label="Toggle navigation"
-          >
-            {sidebarOpen ? "Close" : "Menu"}
-          </button>
-        </div>
-        <nav
-          className={`flex-col gap-4 items-center md:items-start md:flex ${
-            sidebarOpen ? "flex" : "hidden"
-          } md:mt-0 mt-2`}
-        >
-          <a href="#" className="text-green-700 font-semibold">
-            Overview
-          </a>
-          <a href="#" className="text-gray-900">My Offers</a>
-          <a href="#" className="text-gray-900">Analytics</a>
-          <a href="#" className="text-gray-900">Settings</a>
-          <button
-            className="mt-4 w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            onClick={() => signOut({ callbackUrl: "/company-login" })}
-          >
-            Logout
-          </button>
-        </nav>
-      </aside>
 
 
     {/* Main content */}
