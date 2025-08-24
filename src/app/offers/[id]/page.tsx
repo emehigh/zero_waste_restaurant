@@ -79,8 +79,7 @@ export default function RestaurantOffersPage() {
       
       setRestaurant(restaurantInfo);
       setLoading(false);
-      console.log('Restaurant data:', restaurantInfo);
-      console.log('Reviews data:', reviewsData);
+
     }).catch(error => {
       console.error('Failed to fetch data:', error);
       // Fallback to just offers data
@@ -100,19 +99,27 @@ export default function RestaurantOffersPage() {
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem("cart");
-    if (stored) {
-      try {
-        setCart(JSON.parse(stored));
-      } catch {
-        setCart({ restaurantId: null, restaurantName: null, items: [] });
-      }
+  const stored = localStorage.getItem("cart");
+  console.log("aaa", stored);
+  if (stored) {
+    try {
+      console.log("mata");
+      setCart(JSON.parse(stored));
+    } catch {
+      console.log("wtfff");
+      setCart({ restaurantId: null, restaurantName: null, items: [] });
     }
-  }, []);
+  } else {
+    console.log("tactu");
+    setCart({ restaurantId: null, restaurantName: null, items: [] });
+  }
+}, [id]); // <-- add id here
 
   // Save cart to localStorage on change
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (cart.items.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   }, [cart]);
 
   function handleAddToCart(offer: Offer) {

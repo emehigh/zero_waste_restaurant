@@ -29,6 +29,7 @@ export default function CartPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem("cart");
+    console.log("Aiceaa", stored);
     if (stored) {
       try {
         setCart(JSON.parse(stored));

@@ -8,6 +8,7 @@ function CartButton() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
+    console.log
     const stored = localStorage.getItem("cart");
     if (stored) {
       try {

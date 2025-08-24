@@ -47,6 +47,7 @@ export default function OffersPage() {
   // Load cart from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem("cart");
+    console.log("bbb", stored);
     if (stored) {
       try {
         setCart(JSON.parse(stored));
@@ -58,7 +59,9 @@ export default function OffersPage() {
 
   // Save cart to localStorage on change
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (cart.items.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   }, [cart]);
 
   useEffect(() => {
